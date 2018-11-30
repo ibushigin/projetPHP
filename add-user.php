@@ -69,7 +69,7 @@ if(!empty($_POST)){
       $errors['password'] = 'le mot de passe doit faire entre 4 et 10 caractères';
   }
   if($post['password'] !== $post['password2']){
-        $errors['mdp'] = 'Les deux mdp envoyés doivent être identiques';
+        $errors['mdp'] = 'Les deux mots de passe envoyés doivent être identiques';
     }
 //Verif du role
   if(!isset($post['role']) || (($post['role']) != 'ROLE_ADMIN' && ($post['role']) != 'ROLE_VENDOR')){
@@ -278,7 +278,7 @@ if(!empty($_POST)){
         $errors['mdp'] = 'le mot de passe doit faire entre 4 et 10 caractères';
     }
     if($post['password3'] !== $post['password4']){
-          $errors['mdp'] = 'Les deux mdp envoyés doivent être identiques';
+          $errors['mdp'] = 'Les deux mots de passe envoyés doivent être identiques';
       }
 
 
