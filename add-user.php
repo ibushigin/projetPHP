@@ -10,23 +10,44 @@ require_once('inc/connexion.php');
 </head>
 <body>
   <?php require_once('inc/header.php') ?>
-  <h2>Ajouter un nouvel utilisateur</h2>
-  <form method="post">
-    <label for="name">Entrez le nom </label>
-    <input type="text" name="name">
-    <label for="email">Entrez l'email</label>
-    <input type="text" name="email">
-    <label for="password">Entrez le mot de passe</label>
-    <input type="password" name="password">
-    <label for="password2">Répétez le mot de passe</label>
-    <input type="password" name="password2">
-    <label for="role">Choisissez le rôle</label>
-    <select name="role" id="role">
-      <option value="ROLE_VENDOR" selected>Vendeur</option>
-      <option value="ROLE_USER">Admin</option>
-    </select>
-    <button type="submit" name="button">Envoyer</button>
-  </form>
+  <div class="container">
+    <div class="row justify-content-center mb-5 mt-3">
+      <div class="col-md-4">
+      <form method="post">
+        <h2>Ajouter un nouvel utilisateur</h2>
+          <div class="form-group">
+            <label for="name">Entrez le nom </label>
+            <input type="text" name="name" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Entrez l'email</label>
+            <input type="text" name="email" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Entrez le mot de passe</label>
+            <input type="password" name="password" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="password2">Répétez le mot de passe</label>
+            <input type="password" name="password2" class="form-control">
+          </div>
+
+          <label for="role">Choisissez le rôle</label>
+          <div class="input-group mb-3">
+            <select class="custom-select" name="role" id="role">
+              <option value="ROLE_VENDOR" selected>Vendeur</option>
+              <option value="ROLE_USER">Admin</option>
+            </select>
+          </div>
+
+          <button class="btn btn-dark" type="submit" name="button">Envoyer</button>
+        </form>
+      </div>
+    </div>
+  </div>
 <!-- PHP POUR L'AJOUT DE L'USER -->
 <?php
 //Verif du POST
