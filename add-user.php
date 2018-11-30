@@ -10,7 +10,7 @@ require_once('inc/connexion.php');
 </head>
 <body>
   <?php require_once('inc/header.php');
-	if(!empty($_SESSION['role']) && ( $_SESSION['role'] === "ROLE_ADMIN" || $_SESSION['role'] === "ROLE_VENDOR" )){ ?>
+	if(!empty($_SESSION['role']) && ( $_SESSION['role'] === "ROLE_ADMIN"){ ?>
   <div class="container">
     <div class="row justify-content-around mb-5 mt-3">
       <div class="col-md-4">
