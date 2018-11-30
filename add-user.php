@@ -7,6 +7,7 @@ require_once('inc/connexion.php');
 <head>
 	<title>Ajout user</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <?php require_once('inc/header.php');
@@ -138,7 +139,7 @@ if(!empty($_POST)){
             $user = $select->fetch();
         ?>
         <hr>
-                <form method="post" class="mt-5">
+                <form method="post" class="mt-5 mb-5">
                   <div class="form-group">
                       <label>Nom</label>
                       <input type="text" name="name" class="form-control" value="<?= $user['name'] ?>">
@@ -162,6 +163,7 @@ if(!empty($_POST)){
         }
         ?>
 <!-- MODIFICATION MDP -->
+        <hr>
         <h2>Modifier le mot de passe</h2>
         <?php
         $select = $connexion->query('SELECT id, name FROM users');

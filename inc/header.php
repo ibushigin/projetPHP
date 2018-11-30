@@ -38,7 +38,7 @@
 						<a class="nav-link" href="add-user.php">Ajouter un utilisateur</a>
 					</li>
 					<li class="nav-item active">
-						<a class="nav-link" href="add-content.php">Modifier liste produits</a>
+						<a class="nav-link" href="add-product.php">Modifier liste produits</a>
 					</li>
 					<li class="nav-item active">
 						<a class="nav-link" href="index.php?deco">Déconnexion</a>
