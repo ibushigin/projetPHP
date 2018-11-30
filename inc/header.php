@@ -1,3 +1,9 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
 <nav class="header navbar navbar-expand-lg navbar-light">
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
