@@ -9,7 +9,8 @@ require_once('inc/connexion.php');
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 <body>
-  <?php require_once('inc/header.php') ?>
+  <?php require_once('inc/header.php');
+	if(!empty($_SESSION['role']) && ( $_SESSION['role'] === "ROLE_ADMIN" || $_SESSION['role'] === "ROLE_VENDOR" )){ ?>
   <div class="container">
     <div class="row justify-content-around mb-5 mt-3">
       <div class="col-md-4">
@@ -297,8 +298,14 @@ if(!empty($_POST)){
   echo 'Mot de passe vide';
 }
 }
-
+}
+else{
+		echo 'vous devez être connecté ou avoir les droits pour accéder à cette page';
+}
 ?>
+</div>
+</div>
+</div>
 
 
 
