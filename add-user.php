@@ -85,7 +85,61 @@ if(!empty($_POST)){
 }
  ?>
 
-  <h2>Liste des utilisateurs</h2>
+  <h2>Modifier un utilisateur</h2>
+<?php
+$select = $connexion->query('SELECT id, name FROM users');
+$users = $select->fetchAll();
+?>
+<form>
+    <div class="form-group">
+        <label>Nom de l'utilisateur</label>
+        <select name="idUser" class="form-control">
+            <option value="0">Choisir un user</option>
+            <?php
+            foreach($users as $user){
+                ?>
+                <option value="<?= $user['id'] ?>"><?= $user['name'] ?></option>
+                <?php
+            }
+            ?>
+        </select>
+    </div>
+    <button class="btn btn-success">Choisir</button>
+</form>
+<?php
+
+
+if(!empty($_GET['idUser']) && preg_match("#^\d+$#", $_GET['idUser'])){
+    //récupération des infos de l'utilisateur
+    $select = $connexion->prepare('SELECT * FROM users WHERE id = :id');
+    $select->bindValue(':id', $_GET['idUser']);
+    $select->execute();
+    $user = $select->fetch();
+?>
+ <form method="post">
+    <div class="form-group">
+        <label>Nom</label>
+        <input type="text" name="Nom" class="form-control" value="<?= $user['name'] ?>">
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="text" name="email" class="form-control" value="<?= $user['email'] ?>">
+    </div>
+    <div class="form-group">
+        <label>Role</label>
+        <select name="role" class="form-control">
+            <option value="0">Choisir un role</option>
+            <option value="ROLE_AUTEUR" <?= $user['role'] === "ROLE_VENDOR" ? 'selected' : ''; ?> >Vendeur</option>
+            <option value="ROLE_ADMIN" <?= $user['role'] === "ROLE_ADMIN" ? 'selected' : ''; ?> >admin</option>
+        </select>
+    </div>
+     <input type="hidden" name="idUser" value="<?= $_GET['idUser'] ?>">
+    <button type="submit" class="btn btn-info">Ajouter</button>
+</form>
+<?php
+}
+?>
+
 
 
 </body>
