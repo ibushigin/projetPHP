@@ -20,7 +20,7 @@ require_once('inc/connexion.php');
 			        </div>
 			        <div class="form-group">
 			            <label>Mot de passe</label>
-			            <input type="password" name="password" class="form-control">			            
+			            <input type="password" name="password" class="form-control">
 			        </div>
 			        <button type="submit" class="btn btn-info">Se connecter</button>
 			    </form>
@@ -43,20 +43,19 @@ require_once('inc/connexion.php');
 
 			if(empty($errors)){
 
-				$select = $connexion->prepare('SELECT * FROM users WHERE email = :email AND password = :password');
+				$select = $connexion->prepare('SELECT * FROM users WHERE email = :email');
 				$select->bindValue(':email', strip_tags($_POST['email']));
-				$select->bindValue(':password', strip_tags($_POST['password']));
 				$select->execute();
-		    	$users = $select->fetchAll();
+		    $users = $select->fetchAll();
 
 		    	//si j'ai bien un utilisateur et que l'email correspond
 		    	//je dois comparer le mdp envoyé avec le mdp crypté en base avec password_verify
-		    	if(count($users) === 1){
-		    		//l'utilisateur s'est identifié, je lui crée les variables de session
+		    	if(count($users) === 1 && password_verify($_POST['password'] ,$users[0]['password'])){
+
 		    		$_SESSION['id'] = $users[0]['id'];
 		    		$_SESSION['pseudo'] = $users[0]['name'];
 		    		$_SESSION['mail'] = $users[0]['email'];
-		            $_SESSION['role'] = $users[0]['role'];
+		        $_SESSION['role'] = $users[0]['role'];
 
 		            if($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION['role'] == 'ROLE_VENDOR'){
 

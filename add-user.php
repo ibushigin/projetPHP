@@ -294,7 +294,7 @@ if(!empty($_POST)){
         echo implode('<br>', $errors);
     }
 }else{
-  echo 'bordel';
+  echo 'Mot de passe vide';
 }
 }
 
