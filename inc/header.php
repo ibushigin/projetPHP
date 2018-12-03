@@ -39,7 +39,9 @@
 				}
 				if($_SESSION['role'] === "ROLE_ADMIN"){
 					?>
-
+					<li class="nav-item active">
+						<a class="nav-link" href="add-content.php">Modifier page</a>
+					</li>
 					<li class="nav-item active">
 						<a class="nav-link" href="add-user.php">Ajouter un utilisateur</a>
 					</li>
