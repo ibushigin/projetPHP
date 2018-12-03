@@ -15,7 +15,7 @@ require_once('inc/connexion.php');
 			<!-- BARRE DE RECHERCHE -->
 			<?php
 
-			$select = $connexion->query('SELECT DISTINCT label FROM category ORDER BY label');
+			$select = $connexion->query('SELECT label, id FROM category ORDER BY label');
             $categories = $select->fetchAll();
 
             ?>
@@ -32,8 +32,9 @@ require_once('inc/connexion.php');
                         <?php
                      
                         foreach ($categories as $category) {
+
                             ?>
-                            <option><?= $category['label'] ?></option>
+                            <option value="<?= $category['id'] ?>"><?= $category['label'] ?></option>
                             <?php
                         }
                         ?>
@@ -79,21 +80,23 @@ require_once('inc/connexion.php');
 
 			// RECHERCHE PAR CATEGORIE
 			if(isset($_GET['category']) AND is_numeric($_GET['category'])){
-				$select = $connexion->prepare('SELECT * FROM pictures INNER JOIN products ON pictures.id_product = products.id WHERE name LIKE :name ORDER BY date_create DESC');
-        		$select->bindValue(':name', '%' . $_GET['name'] .'%');
-        		$select->execute();
-        		$products = $select->fetchAll();
-                foreach($products as $product){
-                    ?>
+				$select = $connexion->prepare('SELECT * FROM pictures 
+					INNER JOIN products ON pictures.id_product = products.id
+					WHERE products.id_category = :category ORDER BY date_create DESC');
+				$select->bindValue(':category', $_GET['category']);
+				$select->execute();
+				$products = $select->fetchAll();
+				foreach($products as $product){
+					?>
 					<article>
 						<h3><?= $product['name'] ?></h3>
 						<img src="files/thumbnails/<?= $product['file_name'] ?>">
 						<p>Prix : <?= $product['price'] ?>€</p>
 					</article>
-                    <?php
-                 }
+					<?php
+				}
 			}else{
-				$errors[] = 'Mauvaise saisie du nom';
+				$errors[] = 'Mauvaise saisie de la catégorie';
 			}
 
 		}
