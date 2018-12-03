@@ -106,6 +106,8 @@ if(!empty($_POST)){
 //TRAITEMENT DE L'ADRESSE
 if(!empty($_POST)){
   if(isset($_POST['btnAddress'])){
+		$delete = $connexion ->prepare('DELETE FROM address');
+		$delete->execute();
     $errors = [];
     $post = [];
     foreach($_POST as $key => $value){

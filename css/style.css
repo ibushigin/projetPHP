@@ -22,3 +22,7 @@ nav{
 .description h2{
 	font-size: xx-large;
 }
+#map {
+ height: 400px;
+ width: 100%;
+}
