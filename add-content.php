@@ -33,7 +33,7 @@ require_once('inc/connexion.php');
           <button class="btn btn-dark" type="submit" name="btnContent">Modifier</button>
         </form>
       </div>
-      
+
       <div class="col-md-4 mt-5">
         <form method="post">
         <h1>Modifier l'adresse</h1>
@@ -148,8 +148,6 @@ if(!empty($_FILES)){
           };
           move_uploaded_file($_FILES[$key]['tmp_name'], 'files/carousel/' . $newName .'.'. $extension);
           $file_name = $newName .'.'. $extension;
-
-          require_once('connexion.php');
 
           $insert = $connexion->prepare('INSERT INTO carousel (img1) VALUES (:img1)');
           $insert->bindValue(':img1', strip_tags($file_name));
