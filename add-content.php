@@ -27,6 +27,16 @@ require_once('inc/connexion.php');
       <button type="submit" name="btnAddress">Modifier</button>
     </form>
 
+  <h1>Modifier les images de la page d'accueil</h1>
+    <form method="post" enctype="multipart/form-data">
+      <label for="img1">Première image</label>
+      <input type="file" name="img1">
+      <label for="img2">Deuxième image</label>
+      <input type="file" name="img2">
+      <label for="img3">Troisième image</label>
+      <input type="file" name="img3">
+      <button type="submit" name="btnImg">Ajouter les images</button>
+    </form>
 
 
     <?php
@@ -49,7 +59,7 @@ if(!empty($_POST)){
       $insert = $connexion->prepare('INSERT INTO content (title, p1, p2) VALUES (:title, :p1 , :p2)');
       $insert->bindValue(':title', $post['title']);
       $insert->bindValue(':p1', $post['p1']);
-      $insert->bindValue(':p2', ($post['p2']));
+      $insert->bindValue(':p2', $post['p2']);
       if($insert->execute()){
         echo 'vous avez modifié le contenu de la page d\'accueil.';
       }
@@ -87,6 +97,8 @@ if(!empty($_POST)){
     }
   }
 }
+//TRAITEMENT DES IMAGES DU CAROUSEL
+
 //FERMETURE DE LA CONDITION CONNEXION
   }else{
   		echo 'vous devez être connecté ou avoir les droits pour accéder à cette page';
