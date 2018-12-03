@@ -22,7 +22,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
     <div class="row">
 
     	<!-- AJOUTER UN PRODUIT -->
-        <div class="col-md-6">
+        <div class="col-md-4 mt-5">
     		<h2>Ajouter un produit</h2>	
 			<form action="add-product.php" method="POST" enctype="multipart/form-data">
 				<div class="form-group">
@@ -57,10 +57,10 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					</select>
 					</div>	
 				<div class="form-group">
-					<label>Photo :</label>
-					<input type="file" name="photo">
+					<label for="photo">Photo</label>
+					<input class="form-control" type="file" name="photo">
 				</div>	
-				<button type="submit" class="btn btn-info">Ajouter ce produit</button>
+				<button type="submit" class="btn btn-dark">Ajouter ce produit</button>
 			</form>
 		</div>
 
@@ -184,9 +184,10 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
 
 		<!-- MOFIIER UN PRODUIT -->
-	    <div class="col-md-6 text-right">
+		<div class="col-md-4"></div>
+	    <div class="col-md-4 mt-5 mb-3">
     		<h2>Modifier un produit</h2>
-			<form action="add-product.php" method="GET">
+			<form action="add-product.php mb-3" method="GET">
 			<label for="idProduct">Choisir le produit à modifier</label>
 				<select class="custom-select" name="idProduct">
 					<option value="0"></option>
@@ -201,8 +202,8 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					?>
 				</select>
 				<br>
-				<button type="submit">Choisir ce produit</button>
-			</form>	
+				<button class="btn btn-dark mt-2" type="submit">Choisir ce produit</button>
+			</form>
 
 			<?php
 
@@ -213,15 +214,15 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 				$select->execute();
 				$product = $select->fetchAll();
 				?>
-
-				<form action="add-product" method="POST" enctype="multipart/form-data">
+				<hr>
+				<form class="mt-3" action="add-product" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Nom</label>
-						<input type="text" name="nvNom">
+						<input class="form-control" type="text" name="nvNom">
 					</div>
 					<div class="form-group">
 						<label>Prix en euros</label>
-						<input type="text" name="nvPrix">
+						<input class="form-control" type="text" name="nvPrix">
 					</div>	
 					<div class="form-group">
 						<label>Catégorie</label>
@@ -246,9 +247,9 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					</div>	
 					<div class="form-group">
 						<label>Photo</label>
-						<input type="file" name="nvPhoto">
+						<input class="form-control" type="file" name="nvPhoto">
 					</div>	
-					<button type="submit" class="btn btn-info">Modifier ce produit</button>
+					<button type="submit" class="btn btn-dark">Modifier ce produit</button>
 				</form>
 				<?php
 			}
