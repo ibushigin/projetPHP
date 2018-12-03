@@ -211,14 +211,9 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 				$select->bindValue(':id', strip_tags($_GET['idProduct']));
 				$select->execute();
 				$product = $select->fetchAll();
-								
-				
-				$select = $connexion->prepare('SELECT * FROM pictures WHERE id_product = :id' );
-				$select->bindValue(':id', $_GET['idProduct']);
-				$select->execute();
-				$pictures = $select->fetchAll();
 				?>
-				<form action="add-product.php" method="POST" enctype="multipart/form-data">
+
+				<form action="add-product.php" method="POST">
 					<div class="form-group">
 						<label>Nom</label>
 						<input type="text" name="nvNom" placeholder="<?= $product[0]['name'] ?>">
@@ -248,54 +243,12 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 							<option value="non">non</option>
 						</select>
 					</div>
-					<?php
-
-
-					foreach($pictures as $picture){
-						?>
-						<img src="files/thumbnails/<?=$picture['file_name']?>" alt="<?=$picture['file_name']?>">
-						<a href="add-product.php?deleteImage=<?= $picture['id'] ?>">supprimer</a>
-
-						<?php
-					}
-
-					?>
-					<div class="form-group">
-						<label>Photo</label>
-						<input type="file" name="nvPhoto">
-					</div>
 					<input type="hidden" name="idProduct" value="<?= $_GET['idProduct'] ?>">
 					<button type="submit" class="btn btn-info" name="btnModif">Modifier ce produit</button>
 				</form>
 				<?php
 
-			}
-
-			if (!empty($_GET['deleteImage']) && is_numeric($_GET['deleteImage'])) {
-					// je récupère le nom du fichier à supprimer
-					$select = $connexion->prepare('SELECT file_name FROM pictures WHERE id = :id');
-					$select->bindValue(':id', $_GET['deleteImage']);
-					$select->execute();
-					$pictures = $select->fetch();
-					$nomDuFichier = $pictures['file_name'];
-					// j'ai stocké le nom du fichier, je peux supprimer l'entrée de ma base
-					$delete = $connexion->prepare('DELETE FROM pictures WHERE id = :id');
-					$delete->bindValue(':id', $_GET['deleteImage']);
-					if ($delete->execute()) {
-					// l'entrée est supprimée, je peux supprimer le fichier 
-						if(file_exists('files/' . $nomDuFichier)) {
-							// le fichier existe bien, je peux le supprimer
-						    unlink('files/' . $nomDuFichier);
-						}
-						if(file_exists('files/thumbnails/' . $nomDuFichier)) {
-					    	unlink('files/thumbnails/' . $nomDuFichier);
-					    }
-					}
-
-				}
-
-
-				if (!empty($_FILES) && !empty($_POST)) {
+				if (!empty($_POST)) {
 
 
 					if (isset($_POST['btnModif'])) {
@@ -341,20 +294,144 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 							echo implode ('<br>', $errors);
 						}
 
-
-
-
 					}
 
 				}
+								
+				
+				$select = $connexion->prepare('SELECT * FROM pictures WHERE id_product = :id' );
+				$select->bindValue(':id', $_GET['idProduct']);
+				$select->execute();
+				$pictures = $select->fetchAll();
+				?>
+
+				<form action="add-product.php" method="POST" enctype="multipart/form-data">
+					<label for="deleteImage">Image(s) à supprimer</label>
+					<?php
+					foreach($pictures as $picture){
+					?>
+					<div>
+						<img src="files/thumbnails/<?=$picture['file_name']?>" alt="<?=$picture['file_name']?>">
+						<input type="checkbox" id="deleteImage" name="deleteImage" value="<?=$picture['id']?>">
+					</div>
+					<?php
+					}
+					?>
+					<div class="form-group">
+						<label for="nvPhoto">Image(s) à rajouter</label>
+						<input type="file" id="nvPhoto" name="nvPhoto">
+					</div>
+					<input type="hidden" name="id" value=" <?= $_GET['idProduct'] ?>">
+					<button type="submit" class="btn btn-info" name="modifPicture">Modifier l'image</button>
+				</form>
+
+				<?php
+
+				if (isset($_POST['modifPicture'])) { 
+
+						if (!empty($_POST['deleteImage']) && is_numeric($_POST['deleteImage'])) {
+							// je récupère le nom du fichier à supprimer
+							$select = $connexion->prepare('SELECT file_name FROM pictures WHERE id = :id');
+							$select->bindValue(':id', $_POST['deleteImage']);
+							$select->execute();
+							$pictures = $select->fetch();
+							$nomDuFichier = $pictures['file_name'];
+							// j'ai stocké le nom du fichier, je peux supprimer l'entrée de ma base
+							$delete = $connexion->prepare('DELETE FROM pictures WHERE id = :id');
+							$delete->bindValue(':id', $_POST['deleteImage']);
+							if ($delete->execute()) {
+							// l'entrée est supprimée, je peux supprimer le fichier 
+								if(file_exists('files/' . $nomDuFichier)) {
+									// le fichier existe bien, je peux le supprimer
+								    unlink('files/' . $nomDuFichier);
+								}
+								if(file_exists('files/thumbnails/' . $nomDuFichier)) {
+							    	unlink('files/thumbnails/' . $nomDuFichier);
+							    }
+							}
+						}
+					
+
+					if(!empty($_FILES['nvPhoto'])) {
+
+						
+						if ($_FILES['nvPhoto']['error'] == 0) {
+
+								$maxSize = 500 * 1024;
+
+								if ($_FILES['nvPhoto']['size'] <= $maxSize) {
+
+									$fileInfo = pathinfo($_FILES['nvPhoto']['name']);
+									$extension = strtolower($fileInfo['extension']);
+									$extensionsAutorisees = ['jpg', 'jpeg', 'png', 'svg', 'gif'];
+
+									if (in_array($extension, $extensionsAutorisees)) {
+
+										$newName = md5(uniqid(rand(), true));
+										//echo $newName;
+										// création miniatures
+										$newWidth = 100;
+										if ($extension === 'jpg' || $extension === 'jpeg') {
+											$newImage = imagecreatefromjpeg($_FILES['nvPhoto']['tmp_name']);
+										}
+										elseif ($extension === 'png') {
+											$newImage = imagecreatefrompng($_FILES['nvPhoto']['tmp_name']);
+										}
+										elseif ($extension === 'gif') {
+											$newImage = imagecreatefromgif($_FILES['nvPhoto']['tmp_name']);
+										}
+										$oldWidth = imagesx($newImage);
+										$oldHeight = imagesy($newImage);
+										$newHeight = ($oldHeight * $newWidth) / $oldWidth;
+
+										$miniature = imagecreatetruecolor($newWidth, $newHeight);
+
+										imagecopyresampled($miniature, $newImage, 0, 0, 0, 0, $newWidth, $newHeight, $oldWidth, $oldHeight);
+
+										$folder = 'files/thumbnails/';
+
+										if ($extension === 'jpg' || $extension === 'jpeg') {
+											imagejpeg($miniature, $folder . $newName . '.' . $extension);
+										}
+										elseif ($extension === 'png') {
+											imagepng($miniature, $folder . $newName . '.' . $extension);
+										}
+										elseif ($extension === 'gif') {
+											imagegif($miniature, $folder . $newName . '.' . $extension);
+										}
+										move_uploaded_file($_FILES['nvPhoto']['tmp_name'], 'files/' . $newName . '.' . $extension);
+
+										$insert = $connexion->prepare('INSERT INTO pictures (file_name, id_product) VALUES (:filename, :idProduct)');
+										$insert->bindValue(':idProduct', strip_tags($_POST['id']));
+										$insert->bindValue(':filename', $newName.$extension);
+										$insert->execute();
+
+										if ($insert) {
+											echo 'photo ajoutée !';
+										}
+										else {
+											echo 'problème d\'ajout photo';
+										}
+									}
+								}
+
+						}
+					}
+
+
+			}
+
+				
 
 			?>
 		</div>
 
 	</div>
-
+</div>
 
 <?php
+
+}
 
 }
 else {
