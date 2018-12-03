@@ -46,10 +46,10 @@ if(!empty($_POST)){
       $errors[] = 'Ajouter du contenu au paragraphe 1';
     }
     if(empty($errors)){
-      $insert = $connexion->prepare('INSERT INTO content (title, p1, p2) VALUES (:title, :p1 , ;p2)');
+      $insert = $connexion->prepare('INSERT INTO content (title, p1, p2) VALUES (:title, :p1 , :p2)');
       $insert->bindValue(':title', $post['title']);
       $insert->bindValue(':p1', $post['p1']);
-      $insert->bindValue(':p2', ($post['p2']));
+      $insert->bindValue(':p2', $post['p2']);
       if($insert->execute()){
         echo 'vous avez modifié le contenu de la page d\'accueil.';
       }
