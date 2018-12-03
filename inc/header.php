@@ -4,7 +4,6 @@
 
 </head>
 <body>
-
 <nav class="header navbar navbar-expand-lg navbar-light">
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -26,7 +25,7 @@
 			<h1 class="text-center">VINTAGE SHOP</h1>
 		</div>
 		<ul class="navbar-nav col-md-4 justify-content-end">
-			<?php
+			<?php 
 			if(isset($_SESSION['id'])){
 				if($_SESSION['role'] === "ROLE_VENDOR"){
 					?>
@@ -48,15 +47,12 @@
 						<a class="nav-link" href="add-product.php">Modifier liste produits</a>
 					</li>
 					<li class="nav-item active">
-						<a class="nav-link" href="add-content.php">Modifier page</a>
-					</li>
-					<li class="nav-item active">
 						<a class="nav-link" href="index.php?deco">Déconnexion</a>
 					</li>
 				</ul>
 			</div>
 
-			<?php
+			<?php            
 		}
 	}
 	?>
