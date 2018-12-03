@@ -129,6 +129,15 @@ if(!empty($_POST)){
 }
 //TRAITEMENT DES IMAGES DU CAROUSEL
 if(!empty($_FILES)){
+	$delete = $connexion ->prepare('DELETE FROM carousel');
+	$delete->execute();
+	$folder = 'files/carousel';
+	$files = glob($folder . '/*');
+	foreach($files as $file){
+	    if(is_file($file)){
+	        unlink($file);
+	    }
+	};
   foreach($_FILES as $key => $file){
     if($_FILES[$key]['error']==0){
 
@@ -149,11 +158,11 @@ if(!empty($_FILES)){
           move_uploaded_file($_FILES[$key]['tmp_name'], 'files/carousel/' . $newName .'.'. $extension);
           $file_name = $newName .'.'. $extension;
 
-          $insert = $connexion->prepare('INSERT INTO carousel (img1) VALUES (:img1)');
+					$insert = $connexion->prepare('INSERT INTO carousel (img1) VALUES (:img1)');
           $insert->bindValue(':img1', strip_tags($file_name));
 
           if($insert ->execute()){
-            echo "<h3>Fichiers enregistrés</h3>";
+            echo "<h3>Fichier enregistré</h3>";
           }else{
             echo "<h3>Erreur de chargement</h3>";
           }
