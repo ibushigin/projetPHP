@@ -72,6 +72,7 @@ require_once('inc/connexion.php');
 					<h3><?= $product['name'] ?></h3>
 					<img src="files/thumbnails/<?= $product['file_name'] ?>">
 					<p>Prix : <?= $product['price'] ?>€</p>
+					<a href="detail_produit.php?id=<?= $product['id'] ?>">Détail</a>
 				</article>
 			<?php	
 				}
