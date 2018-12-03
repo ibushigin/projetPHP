@@ -305,7 +305,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 				$pictures = $select->fetchAll();
 				?>
 
-				<form action="add-product.php" method="POST" enctype="multipart/form-data">
+				<form method="POST" enctype="multipart/form-data">
 					<label for="deleteImage">Image(s) à supprimer</label>
 					<?php
 					foreach($pictures as $picture){
@@ -327,15 +327,19 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
 				<?php
 
-				if (isset($_POST['modifPicture'])) { 
 
-						if (!empty($_POST['deleteImage']) && is_numeric($_POST['deleteImage'])) {
+				if (isset($_POST['modifPicture'])) { 
+					
+
+						if (isset($_POST['deleteImage'])) {
 							// je récupère le nom du fichier à supprimer
 							$select = $connexion->prepare('SELECT file_name FROM pictures WHERE id = :id');
 							$select->bindValue(':id', $_POST['deleteImage']);
 							$select->execute();
 							$pictures = $select->fetch();
 							$nomDuFichier = $pictures['file_name'];
+							var_dump($pictures);
+
 							// j'ai stocké le nom du fichier, je peux supprimer l'entrée de ma base
 							$delete = $connexion->prepare('DELETE FROM pictures WHERE id = :id');
 							$delete->bindValue(':id', $_POST['deleteImage']);
@@ -349,10 +353,10 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 							    	unlink('files/thumbnails/' . $nomDuFichier);
 							    }
 							}
-						}
+						}else{echo 'hello';}
 					
 
-					if(!empty($_FILES['nvPhoto'])) {
+					if(isset($_FILES['nvPhoto'])) {
 
 						
 						if ($_FILES['nvPhoto']['error'] == 0) {
@@ -403,7 +407,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
 										$insert = $connexion->prepare('INSERT INTO pictures (file_name, id_product) VALUES (:filename, :idProduct)');
 										$insert->bindValue(':idProduct', strip_tags($_POST['id']));
-										$insert->bindValue(':filename', $newName.$extension);
+										$insert->bindValue(':filename', $newName.'.'.$extension);
 										$insert->execute();
 
 										if ($insert) {
