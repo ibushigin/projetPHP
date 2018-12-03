@@ -21,7 +21,7 @@ require_once('inc/connexion.php');
 
             ?>
 		<div class="row justify-content-center">
-            	<form class="col-md-10" method="GET" action="description_produit.php">
+            	<form class="col-md-10" method="GET" action="recherche.php">
             		<!-- RECHERCHE PAR NOM -->
             		<div class="row">
             			<div class="col-md-3">
