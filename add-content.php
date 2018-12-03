@@ -98,6 +98,50 @@ if(!empty($_POST)){
   }
 }
 //TRAITEMENT DES IMAGES DU CAROUSEL
+if(!empty($_FILES)){
+  foreach($_FILES as $key => $file){
+    if($_FILES[$key]['error']==0){
+
+      $maxSize = 1000 * 1024;
+      if($_FILES[$key]['size'] <= $maxSize){
+        $fileInfo = pathinfo($_FILES[$key]['name']);
+        $extension = $fileInfo['extension'];
+        $extensionAuth = ['jpg', 'png', 'svg', 'gif', 'jpeg'];
+        if(in_array($extension, $extensionAuth)){
+          $newName = md5(uniqid(rand(), true));
+          if($extension === 'jpg' || $extension === 'jpeg'){
+            $newImage = imagecreatefromjpeg($_FILES[$key]['tmp_name']);
+          }elseif($extension === 'png'){
+            $newImage = imagecreatefrompng($_FILES[$key]['tmp_name']);
+          }else($extension === 'gif'){
+            $newImage = imagecreatefromgif($_FILES[$key]['tmp_name'])
+          };
+          move_uploaded_file($_FILES[$key]['tmp_name'], 'files/carousel/' . $newName .'.'. $extension);
+          $file_name = $newName .'.'. $extension;
+
+          require_once('connexion.php');
+
+          $insert = $connexion->prepare('INSERT INTO carousel (img1) VALUES (:img1)');
+          $insert->bindValue(':img1', strip_tags($file_name));
+
+          if($insert ->execute()){
+            echo "<h3>Fichiers enregistrés</h3>";
+          }else{
+            echo "<h3>Erreur de chargement</h3>";
+          }
+
+        }else{
+          echo "<h3>Extension interdite</h3>";
+        }
+      }else{
+        echo "<h3>Fichier supérieur à la limite de 500ko</h3>";
+      }
+    }
+
+
+
+  }
+}
 
 //FERMETURE DE LA CONDITION CONNEXION
   }else{
