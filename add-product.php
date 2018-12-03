@@ -26,16 +26,17 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
     		<h2>Ajouter un produit</h2>	
 			<form action="add-product.php" method="POST" enctype="multipart/form-data">
 				<div class="form-group">
-					<label>Nom</label>
-					<input type="text" name="nom">
+					<label for="nom">Nom</label>
+					<input type="text" name="nom" class="form-control">
 				</div>
 				<div class="form-group">
-					<label>Prix en euros</label>
-					<input type="text" name="prix">
+					<label for="prix">Prix en euros</label>
+					<input type="text" name="prix" class="form-control">
 				</div>	
-				<div class="form-group">
-					<label>Catégorie</label>
-					<select name="categorie">
+
+				<label for="categorie">Catégorie</label>
+					<div class="mb-3">
+					<select class="custom-select" name="categorie">
 						<option value="0">Choisissez une catégorie</option>
 						<?php
 						foreach ($labels as $label) {
@@ -45,17 +46,18 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 						}
 						?>
 					</select>
-				</div>		
-				<div class="form-group">
-					<label>Disponibilité</label>
-					<select name="dispo">
+					</div>		
+
+				<label for="dispo">Disponibilité</label>
+					<div class="mb-3">
+					<select class="custom-select" name="dispo">
 						<option value="0">Produit dispo ?</option>
 						<option value="oui">oui</option>
 						<option value="non">non</option>
 					</select>
-				</div>	
+					</div>	
 				<div class="form-group">
-					<label>Photo</label>
+					<label>Photo :</label>
 					<input type="file" name="photo">
 				</div>	
 				<button type="submit" class="btn btn-info">Ajouter ce produit</button>
@@ -182,11 +184,11 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
 
 		<!-- MOFIIER UN PRODUIT -->
-	    <div class="col-md-6">
+	    <div class="col-md-6 text-right">
     		<h2>Modifier un produit</h2>
 			<form action="add-product.php" method="GET">
-			<label>Choisir le produit à modifier</label>
-				<select name="idProduct">
+			<label for="idProduct">Choisir le produit à modifier</label>
+				<select class="custom-select" name="idProduct">
 					<option value="0"></option>
 					<?php
 					$select = $connexion->query('SELECT * FROM products');
@@ -198,6 +200,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					}
 					?>
 				</select>
+				<br>
 				<button type="submit">Choisir ce produit</button>
 			</form>	
 
