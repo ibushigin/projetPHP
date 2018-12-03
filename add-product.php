@@ -246,6 +246,20 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 							<option value="non">non</option>
 						</select>
 					</div>
+					<?php
+					$select = $connexion->prepare('SELECT * FROM pictures WHERE id_product = :id' );
+					$select->bindValue(':id', $_GET['idProduct']);
+					$select->execute();
+					$pictures = $select->fetchAll();
+
+					foreach($pictures as $picture){
+						?>
+						<img src="files/thumbnails/<?=$picture['file_name']?>" alt="<?=$picture['file_name']?>">
+
+						<?php
+					}
+
+					?>
 					<div class="form-group">
 						<label>Photo</label>
 						<input type="file" name="nvPhoto">
