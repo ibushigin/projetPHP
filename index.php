@@ -21,7 +21,7 @@ require_once('inc/connexion.php');
 
     foreach($contenu as $content){
 	?>
-	<div class="row background ml-0">
+	<div class="row background ml-0 carousel">
 		<div class="col-md-3 description text-center">
 			<div class="row">
 				<h2 class="col-md-12 mt-3"><?= $content['title'] ?></h2>
@@ -55,7 +55,7 @@ require_once('inc/connexion.php');
 					foreach($products as $product){
 				?>
 					<img src="files/thumbnails/<?= $product['file_name'] ?>">
-				<?php	
+				<?php
 					}
 				?>
 				</div>
@@ -64,10 +64,33 @@ require_once('inc/connexion.php');
 	</div>
 
 <?php
-//TRAITEMENT DES IMAGES BACKGROUND
-$select = $connexion -> query('SELECT * FROM carousel ORDER BY id DESC LIMIT 3');
-$carousel = $select -> fetchAll();
-var_dump($carousel);
+
  ?>
+<script src="js/jQuery.js"></script>
+<script>/*Changement Background*/
+$(function () {
+    var carousel = $('.carousel');
+    var backgrounds = [
+			<?php
+			//TRAITEMENT DES IMAGES BACKGROUND
+			$select = $connexion -> query('SELECT * FROM carousel ORDER BY id DESC LIMIT 3');
+			$slider = $select -> fetchAll();
+			foreach($slider as $img){
+				echo "'url(files/carousel/".$img['img1'].")', ";
+			}
+			?>
+      ];
+    var current = 0;
+
+    function nextBackground() {
+        carousel.css(
+            'background',
+        backgrounds[current = ++current % backgrounds.length]);
+
+        setTimeout(nextBackground, 5000);
+    }
+    setTimeout(nextBackground, 5000);
+    carousel.css('background', backgrounds[0]);
+});</script>
 </body>
 </html>
