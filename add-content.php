@@ -17,13 +17,11 @@ require_once('inc/connexion.php');
       <textarea type="text" name="p1"></textarea>
       <label for="p2">Deuxième paragraphe</label>
       <textarea type="text" name="p2"></textarea>
-      <label for="address">Adresse de la boutique</label>
-      <input type="text" name="address" placeholder="# rue code postal ville">
       <button type="submit" name="btnContent">Modifier</button>
     </form>
 
   <h1>Modifier l'adresse</h1>
-    <form>
+    <form method "post">
       <label for="address">Adresse de la boutique</label>
       <input type="text" name="address" placeholder="# rue code postal ville">
       <button type="submit" name="btnAddress">Modifier</button>
@@ -46,6 +44,21 @@ if(!empty($_POST)){
     }
     if(empty($post['p1'])){
       $errors[] = 'Ajouter du contenu au paragraphe 1';
+    }
+    if(empty($errors)){
+      $insert = $connexion->prepare('INSERT INTO content (title, p1, p2) VALUES (:title, :p1 , ;p2)');
+      $insert->bindValue(':title', $post['title']);
+      $insert->bindValue(':p1', $post['p1']);
+      $insert->bindValue(':p2', ($post['p2']));
+      if($insert->execute()){
+        echo 'vous avez modifié le contenu de la page d\'accueil.';
+      }
+      else{
+        echo 'sql error';
+      }
+    }
+    else{
+      echo implode('<br>', $errors);
     }
 
   }
