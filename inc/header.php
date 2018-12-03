@@ -25,12 +25,12 @@
 			<h1 class="text-center">VINTAGE SHOP</h1>
 		</div>
 		<ul class="navbar-nav col-md-4 justify-content-end">
-			<?php 
+			<?php
 			if(isset($_SESSION['id'])){
 				if($_SESSION['role'] === "ROLE_VENDOR"){
 					?>
 					<li class="nav-item active">
-						<a class="nav-link" href="add-content.php">Modifier liste produits</a>
+						<a class="nav-link" href="add-product.php">Modifier liste produits</a>
 					</li>
 					<li class="nav-item deconnexion">
 						<a class="nav-link" href="index.php?deco">Déconnexion</a>
@@ -54,7 +54,7 @@
 				</ul>
 			</div>
 
-			<?php            
+			<?php
 		}
 	}
 	?>

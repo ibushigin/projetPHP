@@ -8,6 +8,7 @@ require_once('inc/connexion.php');
 	<title>Ajout produits</title>
   <?php require_once('inc/header.php');
 
+
 if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION['role'] == 'ROLE_VENDOR')) {
 
 	$select = $connexion->query('SELECT label, id FROM category');
@@ -297,8 +298,8 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					}
 
 				}
-								
-				
+
+
 				$select = $connexion->prepare('SELECT * FROM pictures WHERE id_product = :id' );
 				$select->bindValue(':id', $_GET['idProduct']);
 				$select->execute();
@@ -328,8 +329,8 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 				<?php
 
 
-				if (isset($_POST['modifPicture'])) { 
-					
+				if (isset($_POST['modifPicture'])) {
+
 
 						if (isset($_POST['deleteImage'])) {
 							// je récupère le nom du fichier à supprimer
@@ -344,7 +345,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 							$delete = $connexion->prepare('DELETE FROM pictures WHERE id = :id');
 							$delete->bindValue(':id', $_POST['deleteImage']);
 							if ($delete->execute()) {
-							// l'entrée est supprimée, je peux supprimer le fichier 
+							// l'entrée est supprimée, je peux supprimer le fichier
 								if(file_exists('files/' . $nomDuFichier)) {
 									// le fichier existe bien, je peux le supprimer
 								    unlink('files/' . $nomDuFichier);
@@ -354,11 +355,11 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 							    }
 							}
 						}else{echo 'hello';}
-					
+
 
 					if(isset($_FILES['nvPhoto'])) {
 
-						
+
 						if ($_FILES['nvPhoto']['error'] == 0) {
 
 								$maxSize = 500 * 1024;
@@ -425,7 +426,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
 			}
 
-				
+
 
 			?>
 		</div>
