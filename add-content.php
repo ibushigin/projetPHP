@@ -21,7 +21,7 @@ require_once('inc/connexion.php');
     </form>
 
   <h1>Modifier l'adresse</h1>
-    <form method "post">
+    <form method="post">
       <label for="address">Adresse de la boutique</label>
       <input type="text" name="address" placeholder="# rue code postal ville">
       <button type="submit" name="btnAddress">Modifier</button>
@@ -46,7 +46,7 @@ if(!empty($_POST)){
       $errors[] = 'Ajouter du contenu au paragraphe 1';
     }
     if(empty($errors)){
-      $insert = $connexion->prepare('INSERT INTO content (title, p1, p2) VALUES (:title, :p1 , ;p2)');
+      $insert = $connexion->prepare('INSERT INTO content (title, p1, p2) VALUES (:title, :p1 , :p2)');
       $insert->bindValue(':title', $post['title']);
       $insert->bindValue(':p1', $post['p1']);
       $insert->bindValue(':p2', ($post['p2']));
