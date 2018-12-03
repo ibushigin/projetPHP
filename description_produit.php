@@ -8,6 +8,7 @@ require_once('inc/connexion.php');
 	<title>Produits</title>
   <?php require_once('inc/header.php');
 		?>
+<div class="container">
 	<div class="row ml-0">
 		<div class="col-md-12">
 			<h2 class="text-center mt-5 mb-5">Nos produits</h2>
@@ -19,38 +20,44 @@ require_once('inc/connexion.php');
             $categories = $select->fetchAll();
 
             ?>
-		<div class="row justify-content-center">
-			<form class="col-md-2" method="GET" action="description_produit.php">
-				<!-- RECHERCHE PAR NOM -->
-				<div class="row mb-2">
-                	<input type="text" name="name" placeholder="Nom" class="form-control col-md-12">
-                </div>
-                <!-- RECHERCHE PAR CATEGORIE -->
-                <div class="row mb-2">
-                    <select name="category" class="form-control col-md-12">
-                        <option value="0">Choisir une catégorie</option>
-                        <?php
-                     
-                        foreach ($categories as $category) {
+            <div class="row justify-content-center">
+            	<form class="col-md-10" method="GET" action="description_produit.php">
+            		<!-- RECHERCHE PAR NOM -->
+            		<div class="row">
+            			<div class="col-md-3">
+            				<input type="text" name="name" placeholder="Nom" class="form-control">
+            			</div>
 
-                            ?>
-                            <option value="<?= $category['id'] ?>"><?= $category['label'] ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <!-- CLASSER PAR PRIX -->
-                <div class="row justify-content-end">
-                <button type="submit" class="btn btn-primary btn-sm col-md-6">Rechercher</button>
-                    <select name="prix" class="form-control col-md-6">
-                        <option value="0">Ordre Prix</option>
-                        <option value="croissant">Croissant</option>
-                        <option value="decroissant">Décroissant</option>                   	
-                    </select>
-                </div>
-            </form>
-        </div>
+            		<!-- RECHERCHE PAR CATEGORIE -->
+            			<div class="col-md-3">
+	            			<select name="category" class="form-control">
+	            				<option value="0">Choisir une catégorie</option>
+	            				<?php
+
+	            				foreach ($categories as $category) {
+
+	            					?>
+	            					<option value="<?= $category['id'] ?>"><?= $category['label'] ?></option>
+	            					<?php
+	            				}
+	            				?>
+	            			</select>
+            			</div>
+
+            			<!-- CLASSER PAR PRIX -->
+            			<div class="col-md-3">
+	            			<select name="prix" class="form-control">
+	            				<option value="0">Ordre Prix</option>
+	            				<option value="croissant">Croissant</option>
+	            				<option value="decroissant">Décroissant</option>                   	
+	            			</select>
+	            		</div>
+	            		<div class="col-md-3">
+	            			<button type="submit" class="btn btn-primary">Rechercher</button>
+	            		</div>
+            		</div>
+            	</form>
+            </div>
 			
 		<!-- LISTE DES PRODUITS -->
 		<div class="row justify-content-around mt-5">
@@ -62,13 +69,21 @@ require_once('inc/connexion.php');
 				$sql = 'SELECT * FROM pictures INNER JOIN products ON pictures.id_product = products.id ';
 
 				if(!empty($_GET['name'])){
-					$sql .= ' AND name LIKE :name';
+					$sql .= ' AND name LIKE :name ';
 				}
 
 				if(!empty($_GET['category'])){
-					$sql .= ' AND products.id_category = :category';
+					$sql .= ' AND products.id_category = :category ';
 				}
 
+				if($_GET['prix'] === 'croissant'){
+					$sql .= ' ORDER BY price ASC ';
+				}
+
+				if($_GET['prix'] === 'decroissant'){
+					$sql .= ' ORDER BY price DESC ';
+				}
+		
 				$select = $connexion->prepare($sql);
 
 				if(!empty($_GET['name'])){
@@ -114,6 +129,7 @@ require_once('inc/connexion.php');
 			</div>
 		</div>
 	</div>
+</div>
 
 </body>
 </html>
