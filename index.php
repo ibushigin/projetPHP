@@ -53,7 +53,6 @@ require_once('inc/connexion.php');
 		<div class="col-md-2 description text-center">
 			<div class="row">
 				<h2 class="col-md-12 mt-3">Derniers produits ajoutés</h2>
-				<p></p>
 			</div>
 
 			<div class="row mt-5">
