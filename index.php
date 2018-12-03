@@ -40,10 +40,10 @@ require_once('inc/connexion.php');
 	<?php
     }
     ?>
-		<div class="col-md-7">
+		<div class="col-md-6">
 		</div>
 		<!-- BOUCLE SUR LES IMAGES -->
-		<div class="col-md-2 description text-center">
+		<div class="col-md-3 description text-center">
 			<div class="row">
 				<h2 class="col-md-12 mt-3">Derniers produits ajoutés</h2>
 			</div>
