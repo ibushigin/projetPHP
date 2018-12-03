@@ -63,12 +63,32 @@ if(!empty($_POST)){
 
   }
 }
-
-
-
-//FERMETURE DE LA CONDITION CONNEXION
+//TRAITEMENT DE L'ADRESSE
+if(!empty($_POST)){
+  if(isset($_POST['btnAddress'])){
+    $errors = [];
+    $post = [];
+    foreach($_POST as $key => $value){
+      $post[$key] = strip_tags($value);
+    }
+    if(empty($post)){
+      $errors[] = 'Entrez une adresse';
+    }
+    if(empty($errors)){
+      $insert = $connexion -> prepare('INSERT INTO address (address) VALUES (:address)');
+      $insert -> bindValue(':address', $post['address']);
+      if($insert -> execute()){
+        echo 'vous avez modifié l\'adresse de la boutique.';
+      }else{
+        echo 'sql error';
+      }
+    }else{
+      echo implode('<br>', $errors);
+    }
   }
-  else{
+}
+//FERMETURE DE LA CONDITION CONNEXION
+  }else{
   		echo 'vous devez être connecté ou avoir les droits pour accéder à cette page';
   }
 ?>
