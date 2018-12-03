@@ -21,7 +21,7 @@ require_once('inc/connexion.php');
     </form>
 
   <h1>Modifier l'adresse</h1>
-    <form method "post">
+    <form method="post">
       <label for="address">Adresse de la boutique</label>
       <input type="text" name="address" placeholder="# rue code postal ville">
       <button type="submit" name="btnAddress">Modifier</button>
