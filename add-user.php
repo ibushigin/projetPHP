@@ -113,7 +113,7 @@ if(!empty($_POST)){
         <form class="mb-5">
             <div class="form-group">
                 <label>Nom de l'utilisateur</label>
-                <select name="idUser" class="form-control">
+                <select class="custom-select" name="idUser" class="form-control">
                     <option value="0">Choisir un utilisateur</option>
                     <?php
                     foreach($users as $user){
@@ -146,7 +146,7 @@ if(!empty($_POST)){
                   </div>
                   <div class="form-group">
                       <label>Role</label>
-                      <select name="role" class="form-control">
+                      <select class="custom-select" name="role" class="form-control">
                           <option value="ROLE_VENDOR" <?= $user['role'] === "ROLE_VENDOR" ? 'selected' : ''; ?> >Vendeur</option>
                           <option value="ROLE_ADMIN" <?= $user['role'] === "ROLE_ADMIN" ? 'selected' : ''; ?> >Admin</option>
                       </select>
@@ -168,7 +168,7 @@ if(!empty($_POST)){
           <form class="mb-5">
               <div class="form-group">
                   <label>Nom de l'utilisateur</label>
-                  <select name="idPwd" class="form-control">
+                  <select class="custom-select" name="idPwd" class="form-control">
                       <option value="0">Choisir un utilisateur</option>
                       <?php
                       foreach($users as $user){
