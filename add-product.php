@@ -214,8 +214,13 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 				$select->bindValue(':id', strip_tags($_GET['idProduct']));
 				$select->execute();
 				$product = $select->fetchAll();
+								
+				
+				$select = $connexion->prepare('SELECT * FROM pictures WHERE id_product = :id' );
+				$select->bindValue(':id', $_GET['idProduct']);
+				$select->execute();
+				$pictures = $select->fetchAll();
 				?>
-
 				<form action="add-product.php" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Nom</label>
@@ -247,14 +252,12 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 						</select>
 					</div>
 					<?php
-					$select = $connexion->prepare('SELECT * FROM pictures WHERE id_product = :id' );
-					$select->bindValue(':id', $_GET['idProduct']);
-					$select->execute();
-					$pictures = $select->fetchAll();
+
 
 					foreach($pictures as $picture){
 						?>
 						<img src="files/thumbnails/<?=$picture['file_name']?>" alt="<?=$picture['file_name']?>">
+						<a href="add-product.php?deleteImage=<?= $picture['id'] ?>">supprimer</a>
 
 						<?php
 					}
@@ -270,6 +273,29 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 				<?php
 
 			}
+
+			if (!empty($_GET['deleteImage']) && is_numeric($_GET['deleteImage'])) {
+					// je récupère le nom du fichier à supprimer
+					$select = $connexion->prepare('SELECT file_name FROM pictures WHERE id = :id');
+					$select->bindValue(':id', $_GET['deleteImage']);
+					$select->execute();
+					$pictures = $select->fetch();
+					$nomDuFichier = $pictures['file_name'];
+					// j'ai stocké le nom du fichier, je peux supprimer l'entrée de ma base
+					$delete = $connexion->prepare('DELETE FROM pictures WHERE id = :id');
+					$delete->bindValue(':id', $_GET['deleteImage']);
+					if ($delete->execute()) {
+					// l'entrée est supprimée, je peux supprimer le fichier 
+						if(file_exists('files/' . $nomDuFichier)) {
+							// le fichier existe bien, je peux le supprimer
+						    unlink('files/' . $nomDuFichier);
+						}
+						if(file_exists('files/thumbnails/' . $nomDuFichier)) {
+					    	unlink('files/thumbnails/' . $nomDuFichier);
+					    }
+					}
+
+				}
 
 
 				if (!empty($_FILES) && !empty($_POST)) {
