@@ -62,5 +62,12 @@ require_once('inc/connexion.php');
 			</div>
 		</div>
 	</div>
+
+<?php
+//TRAITEMENT DES IMAGES BACKGROUND
+$select = $connexion -> query('SELECT * FROM carousel ORDER BY id DESC LIMIT 3');
+$carousel = $select -> fetchAll();
+var_dump($carousel);
+ ?>
 </body>
 </html>
