@@ -25,7 +25,7 @@
 			<h1 class="text-center">VINTAGE SHOP</h1>
 		</div>
 		<ul class="navbar-nav col-md-4 justify-content-end">
-			<?php
+			<?php 
 			if(isset($_SESSION['id'])){
 				if($_SESSION['role'] === "ROLE_VENDOR"){
 					?>
@@ -54,7 +54,7 @@
 				</ul>
 			</div>
 
-			<?php
+			<?php            
 		}
 	}
 	?>

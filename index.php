@@ -45,7 +45,7 @@ require_once('inc/connexion.php');
 		<!-- BOUCLE SUR LES IMAGES -->
 		<div class="col-md-2 description text-center">
 			<div class="row">
-				<h2 class="col-md-12 mt-3">Derniers produits ajoutés</h2>s
+				<h2 class="col-md-12 mt-3">Derniers produits ajoutés</h2>
 			</div>
 			<div class="row mt-5">
 				<div class="col-md-12 flex-column">
@@ -55,7 +55,7 @@ require_once('inc/connexion.php');
 					foreach($products as $product){
 				?>
 					<img src="files/thumbnails/<?= $product['file_name'] ?>">
-				<?php
+				<?php	
 					}
 				?>
 				</div>

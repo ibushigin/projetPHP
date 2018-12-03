@@ -9,7 +9,7 @@ require_once('inc/connexion.php');
   <?php require_once('inc/header.php');
 	if(!empty($_SESSION['role']) && ( $_SESSION['role'] === "ROLE_ADMIN")){ ?>
   <div class="container">
-    <div class="row justify-content-around mb-5 mt-3">
+    <div class="row justify-content-around mb-5 mt-5">
       <div class="col-md-4">
       <form method="post">
         <h2>Ajouter un nouvel utilisateur</h2>
