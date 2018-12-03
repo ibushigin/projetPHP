@@ -9,7 +9,7 @@ require_once('inc/connexion.php');
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 <body>
-	<?php require_once('inc/header.php'); 
+	<?php require_once('inc/header.php');
 
 if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION['role'] == 'ROLE_VENDOR')) {
 
@@ -23,7 +23,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
     	<!-- AJOUTER UN PRODUIT -->
         <div class="col-md-6">
-    		<h2>Ajouter un produit</h2>	
+    		<h2>Ajouter un produit</h2>
 			<form action="add-product.php" method="POST" enctype="multipart/form-data">
 				<div class="form-group">
 					<label>Nom</label>
@@ -32,7 +32,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 				<div class="form-group">
 					<label>Prix en euros</label>
 					<input type="text" name="prix">
-				</div>	
+				</div>
 				<div class="form-group">
 					<label>Catégorie</label>
 					<select name="categorie">
@@ -45,7 +45,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 						}
 						?>
 					</select>
-				</div>		
+				</div>
 				<div class="form-group">
 					<label>Disponibilité</label>
 					<select name="dispo">
@@ -53,11 +53,11 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 						<option value="oui">oui</option>
 						<option value="non">non</option>
 					</select>
-				</div>	
+				</div>
 				<div class="form-group">
 					<label>Photo</label>
 					<input type="file" name="photo">
-				</div>	
+				</div>
 				<button type="submit" class="btn btn-info" name="btnAdd">Ajouter ce produit</button>
 			</form>
 		</div>
@@ -79,7 +79,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 			if (empty($post['nom'])) {
 				$errors[] = 'Nom de produit invalide';
 			}
-			if (empty($post['prix']) || !preg_match('#^\d+$#', $post['prix'])) { 
+			if (empty($post['prix']) || !preg_match('#^\d+$#', $post['prix'])) {
 				$errors[] = 'Prix invalide';
 			}
 			if (empty($post['categorie']) || !preg_match('#^\w+$#', $post['categorie'])) {
@@ -160,7 +160,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 								}
 								else {
 									echo 'problème d\'ajout photo';
-								}						
+								}
 							}
 						}
 
@@ -179,7 +179,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 			}
 
 		}
-		
+
 	}
 
 	?>
@@ -204,7 +204,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					?>
 				</select>
 				<button type="submit">Choisir ce produit</button>
-			</form>	
+			</form>
 
 			<?php
 
@@ -224,7 +224,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					<div class="form-group">
 						<label>Prix en euros</label>
 						<input type="text" name="nvPrix" placeholder="<?= $product[0]['price'] ?>">
-					</div>	
+					</div>
 					<div class="form-group">
 						<label>Catégorie</label>
 						<select name="nvCategorie">
@@ -237,7 +237,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 							}
 							?>
 						</select>
-					</div>		
+					</div>
 					<div class="form-group">
 						<label>Disponibilité</label>
 						<select name="nvDispo">
@@ -245,11 +245,11 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 							<option value="oui">oui</option>
 							<option value="non">non</option>
 						</select>
-					</div>	
+					</div>
 					<div class="form-group">
 						<label>Photo</label>
 						<input type="file" name="nvPhoto">
-					</div>	
+					</div>
 					<input type="hidden" name="idProduct" value="<?= $_GET['idProduct'] ?>">
 					<button type="submit" class="btn btn-info" name="btnModif">Modifier ce produit</button>
 				</form>
@@ -310,7 +310,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					}
 
 				}
-			
+
 			?>
 		</div>
 
@@ -329,10 +329,9 @@ else {
 
 
 
-	
+
 
 
 
 </body>
 </html>
-
