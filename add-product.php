@@ -17,21 +17,21 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 	?>
 
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-around mb-5 mt-3">
 
     	<!-- AJOUTER UN PRODUIT -->
-        <div class="col-md-6">
+        <div class="col-md-4">
     		<h2>Ajouter un produit</h2>
 			<form action="add-product.php" method="POST" enctype="multipart/form-data">
 				<div class="form-group">
 					<label>Nom</label>
-					<input type="text" name="nom">
+					<input type="text" name="nom" class="form-control">
 				</div>
 				<div class="form-group">
 					<label>Prix en euros</label>
-					<input type="text" name="prix">
+					<input type="text" name="prix" class="form-control">
 				</div>
-				<div class="form-group">
+				<div class="input-group mb-3">
 					<label>Catégorie</label>
 					<select name="categorie">
 						<option value="0">Choisissez une catégorie</option>
@@ -44,7 +44,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 						?>
 					</select>
 				</div>
-				<div class="form-group">
+				<div class="input-group mb-3">
 					<label>Disponibilité</label>
 					<select name="dispo">
 						<option value="0">Produit dispo ?</option>
@@ -54,9 +54,9 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 				</div>
 				<div class="form-group">
 					<label>Photo</label>
-					<input type="file" name="photo">
+					<input type="file" name="photo" class="form-control">
 				</div>
-				<button type="submit" class="btn btn-info" name="btnAdd">Ajouter ce produit</button>
+				<button type="submit" class="btn btn-dark" name="btnAdd">Ajouter ce produit</button>
 			</form>
 		</div>
 
@@ -185,7 +185,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
 
 		<!-- MOFIIER UN PRODUIT -->
-	    <div class="col-md-6">
+	    <div class="col-md-4">
     		<h2>Modifier un produit</h2>
 			<form action="add-product.php" method="GET">
 			<label>Choisir le produit à modifier</label>
@@ -201,7 +201,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					}
 					?>
 				</select>
-				<button type="submit">Choisir ce produit</button>
+				<button type="submit" class="btn btn-dark">Choisir ce produit</button>
 			</form>
 
 			<?php
@@ -245,7 +245,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 						</select>
 					</div>
 					<input type="hidden" name="idProduct" value="<?= $_GET['idProduct'] ?>">
-					<button type="submit" class="btn btn-info" name="btnModif">Modifier ce produit</button>
+					<button type="submit" class="btn btn-dark" name="btnModif">Modifier ce produit</button>
 				</form>
 				<?php
 
@@ -323,7 +323,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 						<input type="file" id="nvPhoto" name="nvPhoto">
 					</div>
 					<input type="hidden" name="id" value=" <?= $_GET['idProduct'] ?>">
-					<button type="submit" class="btn btn-info" name="modifPicture">Modifier l'image</button>
+					<button type="submit" class="btn btn-dark" name="modifPicture">Modifier l'image</button>
 				</form>
 
 				<?php
