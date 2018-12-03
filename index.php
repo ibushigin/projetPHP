@@ -30,13 +30,13 @@ require_once('inc/connexion.php');
 			</div>
 
 			<div class="row mt-5">
-				<div class="col-md-">
+				<div class="col-md-12">
 					<p><?= $content['p1'] ?></p>
 				</div>
 			</div>
 
 			<div class="row mt-5">
-				<div class="col-md-">
+				<div class="col-md-12">
 					<p><?= $content['p2'] ?></p>
 				</div>
 			</div>
