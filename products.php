@@ -23,7 +23,7 @@ require_once('inc/connexion.php');
 			<form class="col-md-2" method="GET" action="description_produit.php">
 				<!-- RECHERCHE PAR NOM -->
 				<div class="row mb-2">
-                	<input type="text" name="nom" placeholder="Nom" class="form-control col-md-12">
+                	<input type="text" name="name" placeholder="Nom" class="form-control col-md-12">
                 </div>
                 <!-- RECHERCHE PAR CATEGORIE -->
                 <div class="row mb-2">
