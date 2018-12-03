@@ -57,14 +57,14 @@ require_once('inc/connexion.php');
 			</div>
 
 			<div class="row mt-5">
-				<div class="col-md-12">
+				<div class="col-md-12 flex-column">
 				<?php
-					$select = $connexion->query('SELECT * FROM products ORDER BY date_create DESC, name LIMIT 4');
+					$select = $connexion->query('SELECT * FROM pictures ORDER BY id DESC LIMIT 4');
 					$products = $select->fetchAll();
 
 					foreach($products as $product){
 				?>
-					<img src="files/thumbnails/<?= $product['name'] ?>">
+					<img src="files/thumbnails/<?= $product['file_name'] ?>">
 				<?php	
 					}
 				?>
