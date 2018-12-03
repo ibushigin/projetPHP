@@ -132,7 +132,7 @@ if(!empty($_FILES)){
   foreach($_FILES as $key => $file){
     if($_FILES[$key]['error']==0){
 
-      $maxSize = 1000 * 1024;
+      $maxSize = 2000 * 1024;
       if($_FILES[$key]['size'] <= $maxSize){
         $fileInfo = pathinfo($_FILES[$key]['name']);
         $extension = $fileInfo['extension'];
@@ -162,7 +162,7 @@ if(!empty($_FILES)){
           echo "<h3>Extension interdite</h3>";
         }
       }else{
-        echo "<h3>Fichier supérieur à la limite de 500ko</h3>";
+        echo "<h3>Fichier supérieur à la limite de 2000ko</h3>";
       }
     }
 
