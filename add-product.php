@@ -11,7 +11,7 @@ require_once('inc/connexion.php');
 <body>
 	<?php require_once('inc/header.php'); 
 
-if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION['role'] == 'ROLE_VENDOR')){
+if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION['role'] == 'ROLE_VENDOR')) {
 
 	$select = $connexion->query('SELECT label, id FROM category');
 	$labels = $select->fetchAll();
@@ -58,7 +58,7 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 					<label>Photo</label>
 					<input type="file" name="photo">
 				</div>	
-				<button type="submit" class="btn btn-info">Ajouter ce produit</button>
+				<button type="submit" class="btn btn-info" name="btnAdd">Ajouter ce produit</button>
 			</form>
 		</div>
 
@@ -68,6 +68,8 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
 	if (!empty($_FILES) && !empty($_POST)) {
 
+		if (isset($_POST['btnAdd'])) {
+
 			$post = [];
 			foreach ($_POST as $key => $value) {
 				$post[$key] = strip_tags(trim($value));
@@ -75,22 +77,22 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
 			$errors = [];
 			if (empty($post['nom'])) {
-				$errors[] = 'nom de produit invalide';
+				$errors[] = 'Nom de produit invalide';
 			}
-			if (empty($post['prix']) || !preg_match('#^[0-9]+\.?,?[0-9]{2}?$#', $post['prix'])) { 
-				$errors[] = 'prix invalide';
+			if (empty($post['prix']) || !preg_match('#^\d+$#', $post['prix'])) { 
+				$errors[] = 'Prix invalide';
 			}
 			if (empty($post['categorie']) || !preg_match('#^\w+$#', $post['categorie'])) {
-				$errors[] = 'catégorie invalide';
+				$errors[] = 'Catégorie invalide';
 			}
 			if (empty($post['dispo']) || ($post['dispo'] !== 'oui' && $post['dispo'] !== 'non')) {
-				$errors[] = 'date de disponibilité invalide';
+				$errors[] = 'Disponibilité invalide';
 			}
 
 
 			if (empty($errors)) {
 
-				var_dump($post['dispo']);
+				//var_dump($post['dispo']);
 
 				$insert = $connexion->prepare('INSERT INTO products (name, price, category, availability, date_create) VALUES (:name, :price, :category, :availability, :date_create)');
 				$insert->bindValue(':name', $post['nom']);
@@ -175,10 +177,13 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 			else {
 				echo implode('<br>', $errors);
 			}
+
+		}
 		
 	}
 
 	?>
+
 
 
 		<!-- MOFIIER UN PRODUIT -->
@@ -211,14 +216,14 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 				$product = $select->fetchAll();
 				?>
 
-				<form action="add-product" method="POST" enctype="multipart/form-data">
+				<form action="add-product.php" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label>Nom</label>
-						<input type="text" name="nvNom">
+						<input type="text" name="nvNom" placeholder="<?= $product[0]['name'] ?>">
 					</div>
 					<div class="form-group">
 						<label>Prix en euros</label>
-						<input type="text" name="nvPrix">
+						<input type="text" name="nvPrix" placeholder="<?= $product[0]['price'] ?>">
 					</div>	
 					<div class="form-group">
 						<label>Catégorie</label>
@@ -245,10 +250,67 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 						<label>Photo</label>
 						<input type="file" name="nvPhoto">
 					</div>	
-					<button type="submit" class="btn btn-info">Modifier ce produit</button>
+					<input type="hidden" name="idProduct" value="<?= $_GET['idProduct'] ?>">
+					<button type="submit" class="btn btn-info" name="btnModif">Modifier ce produit</button>
 				</form>
 				<?php
+
 			}
+
+
+				if (!empty($_FILES) && !empty($_POST)) {
+
+
+					if (isset($_POST['btnModif'])) {
+
+						$post = [];
+						foreach ($_POST as $key => $value) {
+							$post[$key] = strip_tags(trim($value));
+						}
+
+						$errors = [];
+						if (empty($post['nvNom'])) {
+							$errors[] = 'Nouveau nom invalide';
+						}
+						if (empty($post['nvPrix']) || !preg_match('#^\d+$#', $post['nvPrix'])) {
+							$errors[] = 'Nouveau prix invalide';
+						}
+						if (empty($post['nvCategorie']) || !preg_match('#^\d+$#', $post['nvCategorie'])) {
+							$errors[] = 'Nouvelle catégorie invalide';
+						}
+						if (empty($post['nvDispo']) || ($post['nvDispo'] !== 'oui' && $post['nvDispo'] !== 'non')) {
+							$errors[] = 'Nouvelle disponibilité invalide';
+						}
+
+
+						if (empty($errors)) {
+
+							$update = $connexion->prepare('UPDATE products SET name = :name, price = :price, category = :category, availability = :availability, date_create = :date_create WHERE id = :id');
+							$update->bindValue(':name', $post['nvNom']);
+							$update->bindValue(':price', $post['nvPrix']);
+							$update->bindValue(':category', $post['nvCategorie']);
+							$update->bindValue(':availability', $post['nvDispo']);
+							$update->bindValue(':date_create', date('Y-m-d'));
+							$update->bindValue(':id', $post['idProduct']);
+							if ($update->execute()) {
+								echo 'Le produit a été modifié';
+							}
+							else {
+								echo 'Problème de modification';
+							}
+						}
+
+						else {
+							echo implode ('<br>', $errors);
+						}
+
+
+
+
+					}
+
+				}
+			
 			?>
 		</div>
 
@@ -256,8 +318,8 @@ if(!empty($_SESSION['role']) && ($_SESSION['role'] == 'ROLE_ADMIN' || $_SESSION[
 
 
 <?php
-}
 
+}
 else {
 	echo 'Vous devez être connecté ou avoir les droits pour accéder à cette page';
 }
