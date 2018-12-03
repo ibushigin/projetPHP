@@ -8,35 +8,65 @@ require_once('inc/connexion.php');
 	<title>Ajout user</title>
   <?php require_once('inc/header.php');
   if(!empty($_SESSION['role']) && ( $_SESSION['role'] === "ROLE_ADMIN")){?>
+<div class="container-fluid">
+    <div class="row justify-content-around mb-5 mt-3">
 
-  <h1>Modifier le contenu</h1>
-    <form action="" method="post">
-      <label for="title">Titre de la page</label>
-      <input type="text" name="title">
-      <label for="p1">Premier paragraphe</label>
-      <textarea type="text" name="p1"></textarea>
-      <label for="p2">Deuxième paragraphe</label>
-      <textarea type="text" name="p2"></textarea>
-      <button type="submit" name="btnContent">Modifier</button>
-    </form>
+      <div class="col-md-4 mt-5">
+        <form action="" method="post">
 
-  <h1>Modifier l'adresse</h1>
-    <form method="post">
-      <label for="address">Adresse de la boutique</label>
-      <input type="text" name="address" placeholder="# rue code postal ville">
-      <button type="submit" name="btnAddress">Modifier</button>
-    </form>
+        <h1>Modifier le contenu</h1>
+          <div class="form-group">
+            <label for="title">Titre de la page</label>
+            <input type="text" name="title" class="form-control">
+          </div>
 
-  <h1>Modifier les images de la page d'accueil</h1>
-    <form method="post" enctype="multipart/form-data">
-      <label for="img1">Première image</label>
-      <input type="file" name="img1">
-      <label for="img2">Deuxième image</label>
-      <input type="file" name="img2">
-      <label for="img3">Troisième image</label>
-      <input type="file" name="img3">
-      <button type="submit" name="btnImg">Ajouter les images</button>
-    </form>
+          <div class="form-group">
+            <label for="p1">Premier paragraphe</label>
+            <textarea type="text" name="p1" class="form-control"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="p2">Deuxième paragraphe</label>
+            <textarea type="text" name="p2" class="form-control"></textarea>
+          </div>
+
+          <button class="btn btn-dark" type="submit" name="btnContent">Modifier</button>
+        </form>
+      </div>
+      
+      <div class="col-md-4 mt-5">
+        <form method="post">
+        <h1>Modifier l'adresse</h1>
+          <div class="form-group">
+            <label for="address">Adresse de la boutique</label>
+            <input type="text" name="address" placeholder="# rue code postal ville" class="form-control">
+          </div>
+          <button class="btn btn-dark" type="submit" name="btnAddress">Modifier</button>
+        </form>
+      </div>
+
+      <div class="col-md-4 mt-5">
+        <form method="post" enctype="multipart/form-data">
+        <h1>Modifier les images de la page d'accueil</h1>
+        <div class="form-group">
+          <label for="img1">Première image</label>
+          <input class="form-control" type="file" name="img1">
+        </div>
+
+        <div class="form-group">
+          <label for="img2">Deuxième image</label>
+          <input class="form-control" type="file" name="img2">
+        </div>
+
+        <div class="form-group">
+          <label for="img3">Troisième image</label>
+          <input class="form-control" type="file" name="img3">
+        </div>
+
+          <button class="btn btn-dark" type="submit" name="btnImg">Ajouter les images</button>
+        </form>
+      </div>
+    </div>
 
 
     <?php
