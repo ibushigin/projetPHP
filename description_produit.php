@@ -57,46 +57,40 @@ require_once('inc/connexion.php');
 		<?php
 		if(!empty($_GET)){
 
-			$errors =[];
-
-			// RECHERCHE PAR NOM
+			// RECHERCHE PAR NOM ET CATEGORIE
 			if(isset($_GET['name']) && $_GET['name'] < 20){
-				$select = $connexion->prepare('SELECT * FROM pictures INNER JOIN products ON pictures.id_product = products.id WHERE name LIKE :name ORDER BY date_create DESC');
-        		$select->bindValue(':name', '%' . $_GET['name'] .'%');
+				$sql = 'SELECT * FROM pictures INNER JOIN products ON pictures.id_product = products.id ';
+
+				if(!empty($_GET['name'])){
+					$sql .= ' AND name LIKE :name';
+				}
+
+				if(!empty($_GET['category'])){
+					$sql .= ' AND products.id_category = :category';
+				}
+
+				$select = $connexion->prepare($sql);
+
+				if(!empty($_GET['name'])){
+					$select->bindValue(':name', '%' .$_GET['name'] . '%');
+				}
+				if(!empty($_GET['category'])){
+					$select->bindValue(':category', $_GET['category']);
+				}
+
         		$select->execute();
         		$products = $select->fetchAll();
                 foreach($products as $product){
                     ?>
 					<article>
-						<h3><?= $product['name'] ?></h3>
+						<h3><?= preg_replace('#(' . strip_tags($_GET['name']) . ')#i', "<span style='background-color:skyblue;'>$1</span>", $product['name']) ?></h3>
 						<img src="files/thumbnails/<?= $product['file_name'] ?>">
 						<p>Prix : <?= $product['price'] ?>€</p>
 					</article>
                     <?php
                  }
 			}else{
-				$errors[] = 'Mauvaise saisie du nom';
-			}
-
-			// RECHERCHE PAR CATEGORIE
-			if(isset($_GET['category']) AND is_numeric($_GET['category'])){
-				$select = $connexion->prepare('SELECT * FROM pictures 
-					INNER JOIN products ON pictures.id_product = products.id
-					WHERE products.id_category = :category ORDER BY date_create DESC');
-				$select->bindValue(':category', $_GET['category']);
-				$select->execute();
-				$products = $select->fetchAll();
-				foreach($products as $product){
-					?>
-					<article>
-						<h3><?= $product['name'] ?></h3>
-						<img src="files/thumbnails/<?= $product['file_name'] ?>">
-						<p>Prix : <?= $product['price'] ?>€</p>
-					</article>
-					<?php
-				}
-			}else{
-				$errors[] = 'Mauvaise saisie de la catégorie';
+				$errors[] = 'Mauvaise saisie';
 			}
 
 		}
