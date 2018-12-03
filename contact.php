@@ -5,10 +5,11 @@ require_once('inc/connexion.php');
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Ajout user</title>
+	<title>Contact</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 <body>
+
   <?php
 	require_once('inc/header.php');
 	$select = $connexion -> query('SELECT address FROM address');
@@ -21,7 +22,21 @@ require_once('inc/connexion.php');
 	$lat = $resultat['results'][0]['geometry']['location']['lat'];
 	$lng = $resultat['results'][0]['geometry']['location']['lng'];
 	 ?>
-	 <div id="map"></div>
+	<h2>Adresse</h2>
+ 	<p>Vous pouvez nous retrouvez au <?=$map_address?></p>
+	<div id="map"></div>
+	<div name="message">
+		<h2>Contactez-nous</h2>
+		<form action="">
+			<label for="name">Votre nom</label>
+			<input type="text" name="name">
+			<label for="email">Votre email</label>
+			<input type="email" name="email">
+			<label for"message">Votre message</label>
+			<textarea name="message" rows="8" cols="80"></textarea>
+			<button type="submit" name="button">Envoyer</button>
+		</form>
+	</div>
 	 <script>
 		 function initMap() {
 			 var shop = {lat: <?= $lat ?>,  lng: <?= $lng ?>};
